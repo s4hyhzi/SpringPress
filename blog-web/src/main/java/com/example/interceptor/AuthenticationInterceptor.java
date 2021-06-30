@@ -6,6 +6,7 @@ import com.example.annotation.UserLoginToken;
 import com.example.blogdao.entity.User;
 import com.example.blogservice.UserService;
 import com.example.utils.JwtUtils;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
@@ -41,7 +43,16 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             if (userLoginToken.required()){
                 //执行认证
                 if (token==null){
-                    throw new RuntimeException("无token，请重新登录");
+                    response.setCharacterEncoding("UTF-8");
+                    response.setContentType("application/json; charset=utf-8");
+                    PrintWriter out = null;
+                    JSONObject res=new JSONObject();
+                    res.put("success",false);
+                    res.put("message","用户未登录！");
+//                    throw new RuntimeException("无token，请重新登录");
+                    out = response.getWriter();
+                    out.append(res.toString());
+                    return false;
                 }
                 //获取token中的用户信息
                 String userName;
