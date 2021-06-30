@@ -14,7 +14,7 @@ public class JwtUtils {
     /**
      * 过期60分钟
      */
-    private static final Integer EXPIRE_TIME = 1 * 60 * 1000;
+    private static final Integer EXPIRE_TIME = 60 * 60 * 1000;
     //秘钥 盐
     private static final String SECRET = "YI5VMMNCX3QN2LR3KD54QCJOK8EJ1MCI";
 
