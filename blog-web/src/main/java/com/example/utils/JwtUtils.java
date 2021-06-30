@@ -3,6 +3,7 @@ package com.example.utils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.util.Calendar;
@@ -56,12 +57,16 @@ public class JwtUtils {
         map.put("loginName", "admin");
         String token = getToken(map);
         System.out.println(token);
+        try {
 
-        DecodedJWT tokenInfo = verify("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbk5hbWUiOiJhZG1pbiIsImV4cCI6MTYyNTAxODQ1MSwidXNlcklkIjoiMSJ9.osqotyTXaFQ6vGw6KbxWKzgSYqThJeurSY0vgPOHLnA");
-        String userId = tokenInfo.getClaim("userId").asString();
-        String loginName = tokenInfo.getClaim("loginName").asString();
+            DecodedJWT tokenInfo = verify("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbk5hbWUiOiJhZG1pbiIsImV4cCI6MTYyNTAxODQ1MSwidXNlcklkIjoiMSJ9.osqotyTXaFQ6vGw6KbxWKzgSYqThJeurSY0vgPOHLnA");
+            String userId = tokenInfo.getClaim("userId").asString();
+            String loginName = tokenInfo.getClaim("loginName").asString();
 
-        System.out.println(userId);
-        System.out.println(loginName);
+            System.out.println(userId);
+            System.out.println(loginName);
+        }catch (TokenExpiredException tokenExpiredException){
+            System.out.println("过期");
+        }
     }
 }

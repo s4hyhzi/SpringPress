@@ -21,6 +21,7 @@ public class User {
     private String userEmail;
     private String userAvatar;
     private Boolean status;
+    private Boolean delFlag;
 
     public void setId(Integer id) {
         this.id = id;

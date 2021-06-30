@@ -27,8 +27,8 @@ public class UserController {
         try {
             User user = userService.findByName(userName);
             if (user.getUserPassword().equals(Aes.encrypt(password))) {
-                if (!user.getStatus()) {
-                    return "用户被封禁";
+                if (!user.getStatus()||user.getDelFlag()) {
+                    return "用户被封禁或已注销";
                 }
                 Map<String, String> map = new HashMap<>();
                 map.put("userName", user.getUserName());
