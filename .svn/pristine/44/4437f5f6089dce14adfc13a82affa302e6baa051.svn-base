@@ -1,0 +1,12 @@
+spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+spring.datasource.url=jdbc:mysql://galgamecloud.com:3306/blog?serverTimezone=Asia/Shanghai
+spring.datasource.username=blog
+spring.datasource.password=ow666faka
+#是否在控制台打印JPA执行过程生成的SQL
+spring.jpa.show-sql=true 
+#表示JPA对应的数据库是MySQL
+spring.jpa.database=mysql
+#表示在项目启动时根据实体类更新数据库中的表
+spring.jpa.hibernate.ddl-auto=update
+#表示使用的数据库方言是MySQL57Dialect
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL57Dialect
