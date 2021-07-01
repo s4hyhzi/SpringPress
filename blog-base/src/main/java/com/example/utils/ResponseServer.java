@@ -6,19 +6,22 @@ public class ResponseServer {
     private Integer code;
     private String message;
     private Object data;
+    private Boolean success;
 
     private ResponseServer() {
     }
 
-    private ResponseServer(Integer code, String message) {
+    private ResponseServer(Integer code, String message, Boolean success) {
         this.code = code;
         this.message = message;
+        this.success = success;
     }
 
-    private ResponseServer(Integer code, String message, Object data) {
+    private ResponseServer(Integer code, String message, Boolean success, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
+        this.success = success;
     }
 
     /**
@@ -27,7 +30,7 @@ public class ResponseServer {
      * @return
      */
     public static ResponseServer success() {
-        return new ResponseServer(ServerEnum.SUCCESS.getCode(), ServerEnum.SUCCESS.getMessage());
+        return new ResponseServer(ServerEnum.SUCCESS.getCode(), ServerEnum.SUCCESS.getMessage(), ServerEnum.SUCCESS.getSuccess());
     }
 
     /**
@@ -37,7 +40,7 @@ public class ResponseServer {
      * @return
      */
     public static ResponseServer success(Object data) {
-        return new ResponseServer(ServerEnum.SUCCESS.getCode(), ServerEnum.SUCCESS.getMessage(), data);
+        return new ResponseServer(ServerEnum.SUCCESS.getCode(), ServerEnum.SUCCESS.getMessage(), ServerEnum.SUCCESS.getSuccess(), data);
     }
 
     /**
@@ -47,7 +50,7 @@ public class ResponseServer {
      * @return
      */
     public static ResponseServer success(ServerEnum serverEnum) {
-        return new ResponseServer(serverEnum.getCode(), serverEnum.getMessage());
+        return new ResponseServer(serverEnum.getCode(), serverEnum.getMessage(), serverEnum.getSuccess());
     }
 
     /**
@@ -58,20 +61,20 @@ public class ResponseServer {
      * @return
      */
     public static ResponseServer success(ServerEnum serverEnum, Object data) {
-        return new ResponseServer(serverEnum.getCode(), serverEnum.getMessage(), data);
+        return new ResponseServer(serverEnum.getCode(), serverEnum.getMessage(), serverEnum.getSuccess(), data);
     }
 
 
     //失败
-    public static ResponseServer error(Integer code, String msg) {
-        return new ResponseServer(code, msg);
+    public static ResponseServer error(Integer code, String message, Boolean success) {
+        return new ResponseServer(code, message, success);
     }
 
     /**
      * +     * @return
      */
     public static ResponseServer error() {
-        return new ResponseServer(ServerEnum.ERROR.getCode(), ServerEnum.ERROR.getMessage());
+        return new ResponseServer(ServerEnum.ERROR.getCode(), ServerEnum.ERROR.getMessage(), ServerEnum.ERROR.getSuccess());
     }
 
     /**
@@ -81,7 +84,7 @@ public class ResponseServer {
      * @return
      */
     public static ResponseServer error(Object data) {
-        return new ResponseServer(ServerEnum.ERROR.getCode(), ServerEnum.ERROR.getMessage(), data);
+        return new ResponseServer(ServerEnum.ERROR.getCode(), ServerEnum.ERROR.getMessage(), ServerEnum.ERROR.getSuccess(), data);
     }
 
     /**
@@ -91,7 +94,7 @@ public class ResponseServer {
      * @return
      */
     public static ResponseServer error(ServerEnum serverEnum) {
-        return new ResponseServer(serverEnum.getCode(), serverEnum.getMessage());
+        return new ResponseServer(serverEnum.getCode(), serverEnum.getMessage(), serverEnum.getSuccess());
     }
 
     /**
@@ -102,7 +105,7 @@ public class ResponseServer {
      * @return
      */
     public static ResponseServer error(ServerEnum serverEnum, Object data) {
-        return new ResponseServer(serverEnum.getCode(), serverEnum.getMessage(), data);
+        return new ResponseServer(serverEnum.getCode(), serverEnum.getMessage(), serverEnum.getSuccess(), data);
     }
 
     public Integer getCode() {
@@ -117,6 +120,10 @@ public class ResponseServer {
         return data;
     }
 
+    public Boolean getSuccess(){
+        return success;
+    }
+
     public void setCode(Integer code) {
         this.code = code;
     }
@@ -127,5 +134,9 @@ public class ResponseServer {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public void setSuccess(Boolean success){
+        this.success=success;
     }
 }

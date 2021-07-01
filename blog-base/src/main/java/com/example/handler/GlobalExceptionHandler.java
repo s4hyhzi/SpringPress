@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticateException.class)
     public ResponseServer authenticateException(AuthenticateException e, HttpServletRequest request, HttpServletResponse response){
-        return ResponseServer.error(e.getCode(),e.getMessage());
+        return ResponseServer.error(e.getCode(),e.getMessage(),e.getSuccess());
     }
 
     @ExceptionHandler(Exception.class)
