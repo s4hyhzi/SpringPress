@@ -1,10 +1,12 @@
 package com.example.utils;
 
 import com.example.entity.ServerEnum;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class ResponseServer {
     private Integer code;
     private String message;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Object data;
     private Boolean success;
 

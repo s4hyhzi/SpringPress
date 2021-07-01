@@ -27,7 +27,6 @@ public class UserController {
         if (userName==null||password==null){
             return ResponseServer.error(ServerEnum.LOGIN_ISNULL);
         }
-
         try {
             User user = userService.findByName(userName);
             if (user.getUserPassword().equals(Aes.encrypt(password))) {
@@ -51,5 +50,8 @@ public class UserController {
         }
     }
 
-
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public ResponseServer register(){
+        return ResponseServer.success();
+    }
 }
