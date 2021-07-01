@@ -5,6 +5,7 @@ public enum ServerEnum {
     DEL_DEPT_SCUCCESS(201, "删除成功",true),
     LOGIN_ISNULL(5000, "用户名或者密码为空",false),
     PHONE_ISNULL(5007, "手机号不能为空",false),
+    LOGIN_BAN(5009,"用户被封禁或已注销",false),
     USERNAME_NOTEXIST(5001, "用户名输入有误。",false),
     PASSWORD_WRONG(5002, "密码输入错误，请检查",false),
     LOGIN_SUCCESS(5003, "登陆成功",true),
