@@ -24,10 +24,7 @@ public class UserController {
     public ResponseServer login(@RequestBody LoginForm loginForm) {
         String userName = loginForm.getUserName();
         String password = loginForm.getPassword();
-        if (userName==null){
-            return ResponseServer.error(ServerEnum.LOGIN_ISNULL);
-        }
-        if (password==null){
+        if (userName==null||password==null){
             return ResponseServer.error(ServerEnum.LOGIN_ISNULL);
         }
 
