@@ -3,8 +3,13 @@ package com.example.utils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.entity.ServerEnum;
+import com.example.exception.AuthenticateException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -47,8 +52,20 @@ public class JwtUtils {
      *
      * @param token
      */
-    public static DecodedJWT verify(String token) {
-        return JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
+    public static ResponseServer verify(String token) {
+        DecodedJWT decodedJWT;
+        try{
+            decodedJWT=JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
+        }catch (ExpiredJwtException exp){
+            return ResponseServer.error(ServerEnum.TOKEN_TIMEOUT);
+        }catch (SignatureException signatureException){
+            return ResponseServer.error(ServerEnum.SAFETY_ERROR);
+        }catch (JWTDecodeException jwtDecodeException){
+            return ResponseServer.error(ServerEnum.SECRET_ERROR);
+        }catch (Exception e){
+            return ResponseServer.error(ServerEnum.ERROR);
+        }
+        return ResponseServer.success(decodedJWT);
     }
 
     public static void main(String[] args) {
@@ -59,12 +76,17 @@ public class JwtUtils {
         System.out.println(token);
         try {
 
-            DecodedJWT tokenInfo = verify("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbk5hbWUiOiJhZG1pbiIsImV4cCI6MTYyNTAxODQ1MSwidXNlcklkIjoiMSJ9.osqotyTXaFQ6vGw6KbxWKzgSYqThJeurSY0vgPOHLnA");
-            String userId = tokenInfo.getClaim("userId").asString();
-            String loginName = tokenInfo.getClaim("loginName").asString();
+            ResponseServer responseServer = verify("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwiZXhwIjoxNjI1MTA4MDg3fQ.0sN7cIUcbd_c2Hwzt4gz__h19efOtPB92mJqfjyGY30");
+            if (responseServer.getCode() != 200){
+                throw new AuthenticateException(ServerEnum.LOGIN_EXPIRED);
+            }
+            DecodedJWT tokenInfo= (DecodedJWT) responseServer.getData();
+            System.out.println(tokenInfo);
+            String userName = tokenInfo.getClaim("userName").asString();
+//            String loginName = tokenInfo.getClaim("loginName").asString();
 
-            System.out.println(userId);
-            System.out.println(loginName);
+//            System.out.println(userId);
+            System.out.println(userName);
         }catch (TokenExpiredException tokenExpiredException){
             System.out.println("过期");
         }

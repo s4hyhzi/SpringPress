@@ -5,8 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.METHOD, ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface UserLoginToken {
-    boolean required() default true;
+@Target(ElementType.METHOD) // 修饰范围
+@Retention(RetentionPolicy.RUNTIME) // 用来描述注解的声明周期
+public @interface TokenCheckAnnotation {
 }
