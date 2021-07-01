@@ -1,4 +1,4 @@
-package com.example.blogservice;
+package com.example.blogservice.service;
 
 import com.example.blogdao.BookDao;
 import com.example.blogdao.entity.Book;

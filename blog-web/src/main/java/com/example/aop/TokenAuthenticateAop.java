@@ -3,7 +3,7 @@ package com.example.aop;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.annotation.TokenCheckAnnotation;
 import com.example.blogdao.entity.User;
-import com.example.blogservice.UserService;
+import com.example.blogservice.service.UserService;
 import com.example.entity.ServerEnum;
 import com.example.exception.AuthenticateException;
 import com.example.utils.JwtUtils;

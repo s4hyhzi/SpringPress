@@ -2,7 +2,7 @@ package com.example.controller;
 
 import com.example.annotation.TokenCheckAnnotation;
 import com.example.blogdao.entity.Book;
-import com.example.blogservice.BookService;
+import com.example.blogservice.service.BookService;
 import com.example.utils.ResponseServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
