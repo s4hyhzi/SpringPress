@@ -4,7 +4,6 @@ import com.example.blogdao.entity.User;
 import com.example.blogservice.service.UserService;
 import com.example.entity.LoginForm;
 import com.example.entity.ServerEnum;
-import com.example.entity.UserInfo;
 import com.example.utils.Aes;
 import com.example.utils.JwtUtils;
 import com.example.utils.ResponseServer;
@@ -29,17 +28,18 @@ public class UserController {
         }
         try {
             User user = userService.findByName(userName);
-            if (user.getUserPassword().equals(Aes.encrypt(password))) {
-                if (!user.getStatus()||user.getDelFlag()) {
+            if (user.getPassword().equals(Aes.encrypt(password))) {
+                if (!user.getStatus()) {
                     return ResponseServer.error(ServerEnum.LOGIN_BAN);
                 }
                 Map<String, String> map = new HashMap<>();
-                map.put("userName", user.getUserName());
+                map.put("userName", user.getUsername());
                 String token=JwtUtils.getToken(map);
                 Map result=new HashMap();
-
-                UserInfo userInfo=new UserInfo(user.getUserName(),user.getUserNikeName(),user.getUserEmail(),user.getUserAvatar());
-                result.put("userInfo",userInfo);
+                System.out.println(user.toString());
+                user.setPassword(null);
+                user.setId(null);
+                result.put("userInfo",user);
                 result.put("token",token);
                 return ResponseServer.success(result);
             } else {
